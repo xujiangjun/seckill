@@ -53,4 +53,10 @@
         <!-- 通过注解扫描Dao接口包, 可参考saint项目 -->
         <!--<property name="annotationClass" value=""/>-->
     </bean>
+
+    <!-- Redis注入 -->
+    <bean id="redisDao" class="org.seckill.dao.cache.RedisDao">
+        <constructor-arg name="ip" value="localhost"/>
+        <constructor-arg name="port" value="6379"/>
+    </bean>
 </beans>
