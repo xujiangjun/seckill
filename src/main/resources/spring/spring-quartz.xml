@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- JobDetail和Trigger配置可以合并,可以参考md文件中的文章链接 -->
+
+    <!-- JobDetail配置 -->
+    <bean id="testJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <bean class="org.seckill.job.Job"/>
+        </property>
+        <property name="targetMethod" value="execute"/>
+        <!-- 是否允许任务并发执行。当值为false时，表示必须等到前一个线程处理完毕后才再启一个新的线程 -->
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <!-- Trigger配置,class可以自定义实现其他功能,但需要继承CronTriggerFactoryBean,参考saint项目 -->
+    <bean id="testTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="testJobDetail"/>
+        <!-- 每隔1秒钟触发一次 -->
+        <property name="cronExpression" value="*/5 * * * * ?"/>
+    </bean>
+
+    <!-- Scheduler配置 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="testTrigger"/>
+            </list>
+        </property>
+        <!-- value的值可通过配置文件配置 -->
+        <property name="autoStartup" value="true"/>
+        <!-- 去掉quartz中的定时检查版本更新 -->
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
