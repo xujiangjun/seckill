@@ -9,7 +9,7 @@
 
     <!-- 配置整合mybatis过程 -->
     <!-- 1.配置数据库相关参数properties的属性：${url} -->
-    <!--<context:property-placeholder location="classpath:application.properties"/>-->
+    <context:property-placeholder location="classpath:application.properties"/>
 
     <!-- 2.c3p0数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
