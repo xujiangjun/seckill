@@ -8,6 +8,7 @@
   <name>seckill Maven Webapp</name>
   <url>http://maven.apache.org</url>
 
+  <!-- ${user.home}是maven定义的系统属性 -->
   <properties>
     <!-- 定义整个项目的字符集编码 -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -61,6 +62,28 @@
           <uriEncoding>UTF-8</uriEncoding>
           <port>8080</port>
         </configuration>
+      </plugin>
+      <!-- autoconfig配置,多模块maven项目需要配置在web层的maven项目
+        autoconfig默认加载的是classpath下的META-INF/autoconf/auto-config.xml -->
+      <plugin>
+        <groupId>com.alibaba.citrus.tool</groupId>
+        <artifactId>autoconfig-maven-plugin</artifactId>
+        <version>1.2</version>
+        <configuration>
+          <!-- 配置是否展开目标文件,默认为false,即不展开 -->
+          <exploding>true</exploding>
+          <charset>UTF-8</charset>
+          <!-- antx.properties配置文件路径,可填写绝对路径，不填写将默认 -->
+          <userProperties>${user.home}/${autoconfig.properties}</userProperties>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>autoconfig</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -248,4 +271,24 @@
       <version>3.2.1</version>
     </dependency>
   </dependencies>
+
+  <profiles>
+    <!-- 开发环境配置文件 -->
+    <profile>
+      <id>dev</id>
+      <properties>
+        <autoconfig.properties>antx-dev.properties</autoconfig.properties>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <!-- 测试环境配置文件 -->
+    <profile>
+      <id>test</id>
+      <properties>
+        <autoconfig.properties>antx-test.properties</autoconfig.properties>
+      </properties>
+    </profile>
+  </profiles>
 </project>

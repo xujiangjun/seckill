@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- auto-config.xml工作原理：auto-config将值写入antx.properties, 模板文件中的值从antx.properties中取？ -->
+<config description = "">
+    <!-- 配置分组 -->
+    <group name = "default">
+        <property name = "app.root" defaultValue = "${user.home}" description = "应用部署根目录"/>
+        <property name = "app.content" defaultValue="seckill" description="应用名"/>
+        <property name = "run.env" defaultValue="dev" description="运行环境：dev、test、production"/>
+
+        <!-- 定时任务开启配置 -->
+        <property name = "quartz.run" defaultValue = "true"
+                  description = "quartz后台定时程序是否运行" required = "true"/>
+
+        <!-- 数据库连接配置 -->
+        <property name = "jdbc.driverClassName" defaultValue = "com.mysql.jdbc.Driver" description = "JDBC driver class name"/>
+        <property name = "jdbc.url"
+                  defaultValue = "jdbc:mysql://127.0.0.1:3306/seckill?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true"
+                  description = "JDBC URL"/>
+        <property name = "jdbc.username" defaultValue = "root" description = "JDBC user name"/>
+        <property name = "jdbc.password" defaultValue = "root" description = "JDBC password"/>
+
+        <!-- 日志配置 -->
+        <property name = "app.log.root" defaultValue = "${app.root}/logs" description = "log文件目录" />
+        <property name = "app.log.level" defaultValue = "INFO" description = "log级别" />
+        <property name = "app.log.pattern"
+                  defaultValue = "[%d{'MM-dd HH:mm:ss,SSS',GMT+8:00}] %-5p [%.10t][%X{CU}] %logger{36}[%L] - %m%n"
+                  description = "log格式" />
+        <property name = "app.log.charset" defaultValue = "UTF-8" description = "log文件编码类型" />
+        <!-- 可以放置需要的配置, 如logback的邮件配置参数等 -->
+    </group>
+
+    <script>
+        <!-- 根据模板文件生成相应的文件到destfile -->
+        <generate template = "application.properties.vm"
+                  destfile = "WEB-INF/classes/application.properties" charset = "UTF-8"/>
+
+        <generate template = "logback.xml.vm"
+                  destfile="WEB-INF/classes/logback.xml" charset = "UTF-8"/>
+    </script>
+</config>

@@ -14,6 +14,17 @@
 + AOP切面
  + 1.需要aspectjweaver.jar支持
  + 2.[AspectJ表达式语言](http://blog.csdn.net/yakoo5/article/details/17001381)
++ AutoConfig
+ + [AutoConfig工具使用指南](http://openwebx.org/docs/autoconfig.html#d0e17446)
+ + AutoConfig工作原理：
+ <pre>
+ 说明：模板文件中的placeholder是从antx.properties文件中读取的。
+ 1.当antx.properties文件不存在时，会从auto-config.xml文件中读取属性配置，并生成antx.properties。
+ 2.当antx.properties文件存在时
+ 1）若在auto-config.xml文件中新增antx.properties中不存在的属性时，打包会提示是否更新antx.properties配置（但是只会更新新增的属性，若同时已存在字段有修改，不会被自动修改）
+ 2）若仅在auto-config.xml文件中修改字段属性，则打包时不会提示是否更新文件。
+ </pre>
+
 + 问题
  + 1.JSON默认类库在转换枚举类会有问题
  + 2.DispatcherServlet对应的配置文件必须放在WEB-INF/路径下，否则会报错

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="app_log_pattern" value = "${app_log_pattern}" />
+    <property name="app_log_charset" value="${app_log_charset}" />
+    <!-- 可通过logback官网中Configuration章节拷贝 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type
+             ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="COMMON" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${app_log_root}/common.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${app_log_root}/common.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>${app_log_charset}</charset>
+            <pattern>${app_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${app_log_root}/error.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${app_log_root}/error.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <charset>${app_log_charset}</charset>
+            <pattern>${app_log_pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.seckill" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="COMMON"/>
+    </logger>
+    <logger name="com.ibatis" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="ERROR" />
+    </logger>
+    <logger name="org.mybatis.spring" additivity="false">
+        <level value="debug" />
+        <appender-ref ref="ERROR" />
+    </logger>
+    <logger name="org.springframework" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="ERROR" />
+    </logger>
+
+    <root level="debug">
+        <level value="${app_log_level}"/>
+        <appender-ref ref="COMMON" />
+        <appender-ref ref="ERROR" />
+    </root>
+</configuration>
