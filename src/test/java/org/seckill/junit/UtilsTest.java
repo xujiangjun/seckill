@@ -1,5 +1,6 @@
 package org.seckill.junit;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import org.joda.time.DateTime;
@@ -7,6 +8,8 @@ import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.seckill.entity.Person;
+import org.seckill.entity.Student;
+import org.springframework.beans.BeanUtils;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -122,5 +125,14 @@ public class UtilsTest {
     public void timestampTest() {
         String startTime = "2016-09-10 12:30:50";
         System.out.println(Timestamp.valueOf(startTime).getTime());
+    }
+
+    @Test
+    public void beansCopyTest(){
+        Student stu = new Student();
+        stu.setBooksNames(Lists.newArrayList("Spring in Action","Spring docs"));
+        Student stuCopy = new Student();
+        BeanUtils.copyProperties(stu, stuCopy);
+        System.out.println(stuCopy);
     }
 }

@@ -7,6 +7,12 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
+    <!--
+        SpringAOP详看《Spring3.X企业应用开发实战》第6章
+        http://blog.csdn.net/upxiaofeng/article/details/38730417
+        http://blog.csdn.net/leon709/article/details/9529307
+     -->
+
     <bean id="testInterceptor" class="org.seckill.interceptor.TestInterceptor"/>
     <aop:config proxy-target-class="true">
         <aop:pointcut id="testPointcut" expression="execution(* org.seckill.service..*.*(..))"/>
