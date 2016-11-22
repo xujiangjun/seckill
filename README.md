@@ -28,3 +28,4 @@
 + 问题
  + 1.JSON默认类库在转换枚举类会有问题
  + 2.DispatcherServlet对应的配置文件必须放在WEB-INF/路径下，否则会报错
+ + 3.ImmutableSet.copyOf(Collection c)是一个防御性拷贝，c的变化不会影响到Immutable，可以查看示例GuavaTest的ImmutableSetTest()方法

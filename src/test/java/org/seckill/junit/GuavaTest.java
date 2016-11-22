@@ -2,11 +2,16 @@ package org.seckill.junit;
 
 import com.google.common.base.*;
 import com.google.common.base.Objects;
+import com.google.common.base.Optional;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
+import com.google.common.io.Files;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -100,5 +105,48 @@ public class GuavaTest {
         if(ids.contains(id)){ //即时是包装器类型使用contains返回的也算true
             System.out.println(true);
         }
+    }
+
+    @Test
+    public void OptionalTest(){
+        //Optional.of(null);
+        //Optional.of(null).or("5");
+        System.out.println(Optional.fromNullable(null).or("5"));
+    }
+
+    @Test
+    public void ImmutableSetTest(){
+        Set<String> stringSet = new HashSet<>(Arrays.asList("Hello", "Kite"));
+        ImmutableSet immutableSet = ImmutableSet.copyOf(stringSet); // 防御性拷贝
+        stringSet.add("Lucy");
+        System.out.println(immutableSet);
+        System.out.println(stringSet);
+    }
+
+    @Test
+    public void FilesTest(){
+        File file = new File("/Users/xujiangjun/Desktop/1-1-1_optimize_allocate_saint_ddl_20161024.sql");
+        List<String> content = null;
+        try {
+            content = Files.readLines(file, Charsets.UTF_8);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        for (String line : content) {
+            System.out.println(line);
+        }
+    }
+
+    @Test
+    public void optionalTest(){
+        System.out.println(Optional.fromNullable(null).or(10));
+    }
+
+    /**
+     * 泛型通配符只读性：只能读，不能写
+     * @param list  未知类型的list
+     */
+    public void GenericTest(List<?> list){
+        //list.set(0, "Hello");
     }
 }

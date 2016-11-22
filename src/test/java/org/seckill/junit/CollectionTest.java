@@ -4,6 +4,8 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -42,5 +44,19 @@ public class CollectionTest {
     public void indexOfTest(){
         List<String> strList = Lists.newArrayList("Hel", "lun", "base");
         System.out.println(strList.indexOf("lun"));
+    }
+
+    @Test
+    public void collectionSortTest(){
+        List<Integer> list = Lists.newArrayList(4,6,1,5);
+        Collections.sort(list);
+        System.out.println(list);
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        System.out.println(list);
     }
 }

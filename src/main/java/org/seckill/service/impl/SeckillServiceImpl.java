@@ -16,6 +16,7 @@ import org.seckill.service.SeckillService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -44,11 +45,15 @@ public class SeckillServiceImpl implements SeckillService {
     @Autowired
     private RedisDao redisDao;
 
+    @Value("${quartz.run}")
+    private String val;
+
     //md5盐值字符串，用于混淆MD5(胡乱敲)
     private final String slat = "fljlajflkaj133fklajf#%!%^$!%1231&!**&U(u9)0()";
 
     @Override
     public List<Seckill> getSeckillList() {
+        logger.info("Test @Value:{}", val);
         return seckillDao.queryAll(0, 4);
     }
 

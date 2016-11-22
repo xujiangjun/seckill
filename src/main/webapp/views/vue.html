@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue example</title>
+</head>
+<body>
+<div id="app">
+    <p>{{message}}</p>
+    <input v-model="message">
+    <div>
+        <span v-bind:title="message">
+            Hover your mouse over me for a few seconds to see my dynamically bound title!
+        </span>
+        <p v-if="seen">Now you see me</p>
+    </div>
+    <div>
+        <ol>
+            <li v-for="todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+    <!-- 使用组件定义 -->
+    <ul>
+        <self v-for="todo in todos" v-bind:p="todo"></self>
+    </ul>
+    <button :disabled="someDynamicCondition">Button</button>
+    <!-- text-danger 必须使用引号 -->
+    <div class="static" :class="{ active: isActive, 'text-danger': hasError }">
+    </div>
+</div>
+
+<!-- JavaScript脚本部分, 引入的vue.js是开发版本, 使用vm.message可以响应式修改值 -->
+<script type="text/javascript" src="../resources/script/vue.js"></script>
+<script type="text/javascript">
+    // 需要放在new Vue()之前
+    Vue.component('self', {
+        props: ['p'],
+        template: '<li>{{p.text}}</li>'
+    });
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue.js!',
+            seen: true,
+            todos: [
+                { text: 'Learn JavaScript' },
+                { text: 'Learn Vue' },
+                { text: 'Build something awesome' }
+            ],
+            someDynamicCondition: false,
+            isActive: true,
+            hasError: false
+        }
+    });
+    var exComponent = Vue.extend({
+        // 扩展选项
+    });
+    var exInstance = new exComponent();
+</script>
+</body>
+</html>
