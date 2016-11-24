@@ -39,4 +39,8 @@
         #{result, jdbcType=INTEGER, mode=OUT}
         )
     </select>
+
+    <select id="getOrderFlags" resultType="java.lang.String">
+        select ${field} from ${table} where ${field} is not null
+    </select>
 </mapper>

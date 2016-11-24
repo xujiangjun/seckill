@@ -29,6 +29,14 @@ public class CollectionTest {
         }
     }
 
+    @Test
+    public void testRemoveAll(){
+        List<String> str1List = Lists.newArrayList("a","b","c", "d");
+        List<String> str2List = Lists.newArrayList("b","c", "e");
+        str1List.retainAll(str2List);
+        System.out.println("T");
+    }
+
     /**
      * EmptyList进行for循环不会抛出异常
      */

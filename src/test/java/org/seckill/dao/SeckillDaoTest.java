@@ -1,5 +1,6 @@
 package org.seckill.dao;
 
+import com.google.common.base.Splitter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.seckill.entity.Seckill;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,5 +50,33 @@ public class SeckillDaoTest {
         for (Seckill seckill : seckills) {
             System.out.println(seckill);
         }
+    }
+
+    @Test
+    public void testGetOrderFlags(){
+        List<String> fullList = new ArrayList<>();
+        List<String> str1List = seckillDao.getOrderFlags("flags", "orderflags1");
+        List<String> str2List = seckillDao.getOrderFlags("field1", "orderflags2");
+        List<String> str3List = seckillDao.getOrderFlags("field1", "orderflags3");
+        fullList.addAll(str1List);
+        fullList.addAll(str2List);
+        fullList.addAll(str3List);
+        List<String> allList = new ArrayList<>();
+        for (String s : fullList) {
+            List<String> strList = Splitter.on(",").omitEmptyStrings().trimResults().splitToList(s);
+            for (String s1 : strList) {
+                if(allList.contains(s1)){
+                    break;
+                }else{
+                    allList.add(s1);
+                }
+            }
+        }
+        System.out.println(allList);
+    }
+
+    @Test
+    public void testf(){
+        //Assert.assertEquals();
     }
 }

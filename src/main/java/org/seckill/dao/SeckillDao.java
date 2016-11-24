@@ -40,4 +40,7 @@ public interface SeckillDao {
      * @param paramMap
      */
     void killByProcedure(Map<String, Object> paramMap);
+
+    List<String> getOrderFlags(@Param("field") String field,
+                               @Param("table") String table);
 }

@@ -242,6 +242,11 @@
       <version>4.12</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>2.2.22</version>
+    </dependency>
 
     <!-- 通用工具类 -->
     <dependency>
