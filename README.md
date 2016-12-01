@@ -23,6 +23,7 @@
  2.当antx.properties文件存在时
  1）若在auto-config.xml文件中新增antx.properties中不存在的属性时，打包会提示是否更新antx.properties配置（但是只会更新新增的属性，若同时已存在字段有修改，不会被自动修改）
  2）若仅在auto-config.xml文件中修改字段属性，则打包时不会提示是否更新文件。
+ 3.auto-config.xml文件中，WEB-INF/classes/application.properties的路径可以考虑改为WEB-INF/application.properties，然后再WEB-INF下新建一个application.properties文件，当build成功后，application.properties文件会被重写，但是xml中读取该属性文件的location应该改为/WEB-INF/application.properties
  </pre>
 
 + 问题
