@@ -20,7 +20,7 @@ public class Student extends Person{
     private String classNo;
 
     /** 班主任 **/
-    private String teacher;
+    private Integer teacherNo;
 
     /** 学校 **/
     private String school;

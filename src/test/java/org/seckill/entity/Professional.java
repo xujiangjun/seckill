@@ -12,7 +12,7 @@ import lombok.ToString;
 public class Professional extends Person {
 
     /** 教师编号 **/
-    private String teacherNo;
+    private Long teacherNo;
 
     /** 班级 **/
     private String classNo;

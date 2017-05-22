@@ -1,12 +1,15 @@
 package org.seckill.entity;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * User: xujiangjun
  * Date: 16/9/8 12:11
  */
-@Data
+//@Data
+    @Getter
+    @Setter
 public class Person {
 
     /**
