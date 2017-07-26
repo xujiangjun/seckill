@@ -4,6 +4,9 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.seckill.service.SeckillService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Console;
 import java.math.BigDecimal;
@@ -18,6 +21,8 @@ import java.util.*;
  */
 @Slf4j
 public class NormalTest {
+
+    public static final Logger logger = LoggerFactory.getLogger(SeckillService.class);
 
     /**
      * 将抛出空指针异常

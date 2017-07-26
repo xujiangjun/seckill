@@ -21,7 +21,8 @@ public class JodaTimeTest {
 
     @Test
     public void test(){
-        String time = "2016-10-20 20:30:30";
+        String time = "2017-04-26 08:44:00";
+//        String time = "2016-10-20 20:30:30";
         DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
         System.out.println(formatter.parseDateTime(time).toString("yyyy-MM-dd hh:mm:ss"));
         System.out.println(formatter.parseLocalDate(time).dayOfMonth().get());
