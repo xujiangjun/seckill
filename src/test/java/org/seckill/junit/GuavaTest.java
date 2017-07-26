@@ -112,6 +112,7 @@ public class GuavaTest {
         //Optional.of(null);
         //Optional.of(null).or("5");
         System.out.println(Optional.fromNullable(null).or("5"));
+        System.out.println(Optional.of(10).asSet());
     }
 
     @Test
@@ -140,6 +141,22 @@ public class GuavaTest {
     @Test
     public void optionalTest(){
         System.out.println(Optional.fromNullable(null).or(10));
+        long startTimeStamp = System.currentTimeMillis();
+        System.out.println(1 << 29);
+        System.out.println(System.currentTimeMillis() - startTimeStamp);
+        long startTime = System.currentTimeMillis();
+        System.out.println(Math.pow(2,29));
+        System.out.println(System.currentTimeMillis() - startTime);
+    }
+
+    @Test
+    public void testFormat(){
+        List<Integer> arrList = Lists.newArrayList(4, 3, 2, 1);
+        System.out.println(Ordering.natural().reverse().isOrdered(arrList));
+        System.out.println(MoreObjects.toStringHelper("Hello").add("x", 10).add("y", 20).toString());
+        Preconditions.checkArgument(1>2, "%s%s", "It", "is", "false", "true");
+        Integer a = Optional.<Integer>fromNullable(null).or(10);
+        System.out.println(a);
     }
 
     /**
@@ -147,6 +164,38 @@ public class GuavaTest {
      * @param list  未知类型的list
      */
     public void GenericTest(List<?> list){
+        new ThreadLocal<String>(){
+            @Override
+            protected String initialValue() {
+                return super.initialValue();
+            }
+        };
         //list.set(0, "Hello");
     }
+
+    public static void main(String[] args) {
+        List<Integer> arrList = Lists.newArrayList(4, 3, 2, 1);
+        Iterator<Integer> it = arrList.iterator();
+        while (it.hasNext()){
+            it.next();
+            it.remove();
+        }
+        System.out.println(arrList.size());
+    }
+
+    @Test
+    public void testSpittle(){
+        Map<String, String> tokenMap = Splitter.on(",").withKeyValueSeparator(":").split("1:2");
+
+    }
+
+    @Test
+    public void testS(){
+        String str = "b68807af-ae43-453b-ab14-33156b76baf7.jpgb68807af-ae43-453b-ab14-33156b76baf7.jpg";
+        Iterable<String> it = Splitter.on(".jpg").omitEmptyStrings().trimResults().split(str);
+        for (String s : it) {
+            System.out.println(s);
+        }
+    }
+
 }

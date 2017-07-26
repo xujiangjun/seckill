@@ -1,7 +1,7 @@
 package org.seckill.junit;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -10,8 +10,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 /**
  * User: xujiangjun
@@ -67,30 +66,36 @@ public class NormalTest {
         BigDecimal a3 = new BigDecimal(15.216, mc);
         System.out.println(a3);
         System.out.println(a1.multiply(a3).divide(a2,2 , BigDecimal.ROUND_HALF_UP));
-        BigDecimal a4 = BigDecimal.valueOf(6, 2);
+        BigDecimal a4 = BigDecimal.valueOf(1000000000).multiply(BigDecimal.valueOf(1, 9));
         System.out.println(a4);
     }
 
     @Test
     public void mathTest(){
         System.out.println(Math.random());
-        System.out.println(Byte.toUnsignedInt((byte)254));
+//        System.out.println(Byte.toUnsignedInt((byte)254));
         System.out.println(new Random().nextInt());
         System.out.println(Math.min(3, -2));
-        System.out.println(Math.addExact(3,5));
+//        System.out.println(Math.addExact(3,5));
         System.out.println(Math.pow(2, 16));
+        Collections.sort(Lists.<Comparable>newArrayList(), new Comparator<Comparable>() {
+            @Override
+            public int compare(Comparable o1, Comparable o2) {
+                return 0;
+            }
+        });
     }
 
     @Test
     public void stringTest(){
-        System.out.println(String.join(",", Lists.<CharSequence>newArrayList("He", "She", "They")));
-        System.out.println(String.join(",", new String[]{"He", "She", "They"}));
-        System.out.println(String.join(",", "Peter", "Paul", "Mary"));
+//        System.out.println(String.join(",", Lists.<CharSequence>newArrayList("He", "She", "They")));
+//        System.out.println(String.join(",", new String[]{"He", "She", "They"}));
+//        System.out.println(String.join(",", "Peter", "Paul", "Mary"));
         char c = '/';
         System.out.println((int)c);
         String str = "abcdabc";
         // 编码点 参考《写给大忙人看的Java核心技术》 Page25
-        System.out.println(new Gson().toJson(str.codePoints().toArray()));
+//        System.out.println(new Gson().toJson(str.codePoints().toArray()));
         /*
             8.2f中8代表输出的宽度，且默认是右对齐
             http://blog.csdn.net/Frank_Jay/article/details/50226273
@@ -198,4 +203,64 @@ public class NormalTest {
         Thread.sleep(1000);
         System.out.println("Four breakPoint!");
     }
+
+    @Test
+    public void testUnitVolume(){
+        System.out.println(1<<33);
+        System.out.println(Math.pow(2,30));
+        System.out.println(getUnitVolume("100*250*400", 4));
+    }
+
+    private BigDecimal getUnitVolume(String outerPackingSize, Integer packingValue){
+        if(outerPackingSize != null && outerPackingSize.length() > 0){
+            List<String> strList = Splitter.on("*").omitEmptyStrings().trimResults()
+                    .splitToList(outerPackingSize);
+            BigDecimal unitVolume = BigDecimal.ONE;
+            for (String str : strList) {
+                unitVolume = unitVolume.multiply(new BigDecimal(str));
+            }
+            unitVolume = unitVolume.divide(BigDecimal.valueOf(packingValue,-9), 3, BigDecimal.ROUND_HALF_UP);
+            return unitVolume;
+        }else{
+            return BigDecimal.valueOf(0.000);
+        }
+    }
+
+    @Test
+    public void testBigDecimal(){
+        Double dd= Double.valueOf("0.00864567");
+        BigDecimal bigD = new BigDecimal(dd);
+        MathContext mc = new MathContext(4,RoundingMode.HALF_UP);
+        //4表示取四位有效数字，RoundingMode.HALF_UP表示四舍五入
+        bigD= bigD.multiply(new BigDecimal(100),mc);
+        System.out.println(bigD.toString());
+        System.out.println(Float.MAX_VALUE);
+        System.out.println(62345678.91234556f);
+    }
+
+    @Test
+    public void testBigDecimalZero(){
+        log.info("{}", new BigDecimal("0.00").equals(new BigDecimal("0.00")));
+        log.info("{}", new BigDecimal(0.00).equals(BigDecimal.valueOf(0.00)));
+        log.info("{}", new BigDecimal(0.00).equals(new BigDecimal("0.00")));
+        log.info("{}", new BigDecimal(0).equals(BigDecimal.ZERO));
+        log.info("{}", BigDecimal.ZERO.equals(BigDecimal.valueOf(0)));
+        System.out.println(Integer.toBinaryString(39532));
+        System.out.println(Math.log(4));
+    }
+
+    @Test
+    public void testBigInteger(){
+        System.out.println("http://tqmall-image.oss-cn-hangzhou.aliyuncs.com/erp/wms/1216/1469152951953.jpg".length());
+    }
+
+
+    @Test
+    public void testRandom(){
+        Random random = new Random();
+        for (int i = 0; i < 30; i++) {
+            System.out.println(random.nextInt(2));;
+        }
+    }
+
 }

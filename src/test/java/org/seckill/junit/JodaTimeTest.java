@@ -1,10 +1,14 @@
 package org.seckill.junit;
 
-import org.joda.time.DateTime;
+import org.joda.time.*;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -51,5 +55,39 @@ public class JodaTimeTest {
 
     @Test
     public void test4(){
+        String updateTime = new DateTime().plusMinutes(10).toString("yyyy-MM-dd HH:mm:ss.SSS");
+        System.out.println(updateTime);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MINUTE, 10);
+        String updateTime1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(cal.getTime());
+        System.out.println(updateTime1);
+    }
+
+    @Test
+    public void testDays(){
+        DateTime start = new DateTime();
+        DateTime end = new DateTime().plusDays(1).plusSeconds(22).plusMinutes(50).plusSeconds(30);
+        Period p = new Interval(start, end).toPeriod();
+        System.out.println(p.getDays() + " " + p.getHours() + ":" + p.getMinutes() + ":" + p.getSeconds() + p.getMillis());
+        System.out.println(start.toString("yyyy-MM-dd HH:mm:ss") + "-----------" + end.toString("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(Days.daysBetween(start, end).getDays());
+        System.out.println(Hours.hoursBetween(start, end).getHours());
+        System.out.println(Days.daysBetween(end, start).getDays());
+    }
+
+    @Test
+    public void testConvert(){
+        System.out.println(new DateTime(new Date()).toString("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(new DateTime(new Date()).plusDays(1).withHourOfDay(19).withMinuteOfHour(59).withSecondOfMinute(59).toString("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Test
+    public void testMillSecond(){
+        DateTime currentTime = new DateTime();
+        DateTime expireTime = currentTime.withHourOfDay(23).withMinuteOfHour(59).withSecondOfMinute(59)
+                .withMillisOfSecond(999);
+        long time = new Duration(currentTime, expireTime).dividedBy(1000, RoundingMode.HALF_UP).getMillis();
+        System.out.println(currentTime.getMillis() + "_" + expireTime.getMillis() + "_" + time);
+        System.out.println(currentTime.getMillis() - expireTime.getMillis());
     }
 }
